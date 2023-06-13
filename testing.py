@@ -2,13 +2,10 @@ import streamlit as st
 from PIL import Image
 from roboflow import Roboflow
 import os
-from ultralytics import YOLO
 
-# Load a pretrained YOLO model
-model = YOLO('yolov8n.pt')
-# Load COCO YAML and Train the model. 
-results = model.train(data='data.yaml', epochs=1)
-
+rf = Roboflow(api_key="")
+project = rf.workspace().project("rider-number-finder")
+model = project.version(2).model
 
 # Create a Streamlit UI
 st.title('Image Predictor')
