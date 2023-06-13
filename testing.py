@@ -41,3 +41,28 @@ for image_path in filtered_images:
     image = Image.open(image_path)
     st.image(image, caption="Filtered Image", use_column_width=True)
     max_images = 5  # Set the maximum number of images to display
+    
+    
+# Create a temporary download folder
+download_folder = 'filtered_images'
+os.makedirs(download_folder, exist_ok=True)
+
+# Copy the filtered images to the download folder
+for image_path in filtered_images:
+    shutil.copy2(image_path, download_folder)
+
+# Create a zip file of the downloadable folder
+zip_filename = 'filtered_images.zip'
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    for root, dirs, files in os.walk(download_folder):
+        for file in files:
+            zipf.write(os.path.join(root, file), file)
+
+# Provide a download link for the zip file
+b64_zip_data = base64.b64encode(open(zip_filename, 'rb').read()).decode()
+download_link = f'<a href="data:application/zip;base64,{b64_zip_data}" download="{zip_filename}">Download Filtered Images</a>'
+st.markdown(download_link, unsafe_allow_html=True)
+
+# Remove the temporary download folder and zip file
+shutil.rmtree(download_folder)
+os.remove(zip_filename)
