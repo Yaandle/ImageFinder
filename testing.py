@@ -2,6 +2,10 @@ import streamlit as st
 from PIL import Image
 from roboflow import Roboflow
 import os
+import zipfile
+import shutil
+import pathlib
+import base64
 
 rf = Roboflow(api_key="")
 project = rf.workspace().project("rider-number-finder")
