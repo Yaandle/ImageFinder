@@ -1,0 +1,41 @@
+from ultralytics import YOLO
+import streamlit as st
+import numpy
+import cv2
+import os
+from PIL import Image
+import numpy as np
+
+model = YOLO('yolov8.pt')
+
+st.title('Image Predictor')
+st.header('Enter a rider number to return images within a folder.')
+class_name = st.text_input("Enter the desired class name(0-999)") 
+
+source = 'images'
+folder_path = (source)  
+for image_name in os.listdir(folder_path):
+    image_path = os.path.join(folder_path, image_name)
+
+prediction = model.predict(source, stream=False, imgsz=320,)  
+                                                    
+results = model(source)
+boxes = results.xyxy[0]  
+classes = boxes[:, -1]  
+box = boxes[0]
+boxes.cls
+
+detection_output = results
+filtered_images = []
+
+for result in prediction:
+    if result["Class"] == class_name:
+        filtered_images.append(image_path)
+
+for image_path in filtered_images:
+  image = Image.open(image_path)
+    
+print (detection_output)
+
+
+
