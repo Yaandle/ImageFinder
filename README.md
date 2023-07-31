@@ -3,9 +3,9 @@ Object Detection model that predicts the number inside the image.
 
 This uses a pre-trained dataset I made in Roboflow. 
 
-Object Detection model that predicts the number inside the image.
+Ultralytics YOLOV8.
 
-This app works without the need for ultralytics.
-It is pulling the pre trained dataset and classes straight from Roboflow.
+The Test.py code sorts through an image directory and filters the images that contain the user-entered 'class_name' within the prediction to a downloaded zip folder.
 
-To make improvements to the code we need to test the max capacity for images in a folder and the time it is capable of returning images in.
+
+
