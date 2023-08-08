@@ -1,3 +1,4 @@
+
 import os
 import shutil
 from ultralytics import YOLO
@@ -5,9 +6,9 @@ import streamlit as st
 import zipfile
 import base64
 
-model = YOLO("")
-folder_path = ''
-destination_folder = ''
+model = YOLO("E:/Machine Learning/Object Detection/App 2.0/Models/v3.pt")
+folder_path = 'images'
+destination_folder = 'filtered_images'
 filtered_images = []
 
 class_name = st.text_input("Enter the desired class name")
@@ -15,7 +16,7 @@ class_name = st.text_input("Enter the desired class name")
 for image_name in os.listdir(folder_path):
     image_path = os.path.join(folder_path, image_name)
 
-    results = model(image_path, conf=0.1)
+    results = model(image_path, conf=0.1,)
     boxes = results[0].boxes
     for box in boxes:
         if box.cls == class_name:
@@ -24,7 +25,7 @@ for image_name in os.listdir(folder_path):
             dest_file = os.path.join(destination_folder, image_name)
             shutil.copy2(source_file, dest_file)
             break
-
+    
 
 for image_path in filtered_images:
     shutil.copy2(image_path, destination_folder)
