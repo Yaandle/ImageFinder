@@ -1,4 +1,3 @@
-
 import os
 import shutil
 from ultralytics import YOLO
@@ -6,12 +5,12 @@ import streamlit as st
 import zipfile
 import base64
 
-model = YOLO("E:/Machine Learning/Object Detection/App 2.0/Models/v3.pt")
-folder_path = 'images'
-destination_folder = 'filtered_images'
+model = YOLO("")
+folder_path = ''  #The folder the model will loop through
+destination_folder = 'filtered_images' #The filter the images will be filtered too
 filtered_images = []
 
-class_name = st.text_input("Enter the desired class name")
+class_name = st.text_input("Enter the desired class name") #The class number you want filtered
 
 for image_name in os.listdir(folder_path):
     image_path = os.path.join(folder_path, image_name)
