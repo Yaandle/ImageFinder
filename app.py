@@ -7,10 +7,8 @@ import base64
 
 model = YOLO("")
 folder_path = ''  #The folder the model will loop through
-destination_folder = 'filtered_images' #The filter the images will be filtered too
+destination_folder = 'filtered_images' #The folder images will be filtered too
 filtered_images = []
-
-class_name = st.text_input("Enter the desired class name") #The class number you want filtered
 
 for image_name in os.listdir(folder_path):
     image_path = os.path.join(folder_path, image_name)
@@ -18,7 +16,7 @@ for image_name in os.listdir(folder_path):
     results = model(image_path, conf=0.1,)
     boxes = results[0].boxes
     for box in boxes:
-        if box.cls == class_name:
+        if box.cls == #57:
             filtered_images.append(image_path)
             source_file = os.path.join(folder_path, image_name)
             dest_file = os.path.join(destination_folder, image_name)
