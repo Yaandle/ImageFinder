@@ -8,19 +8,15 @@ import streamlit as st
 # Load the YOLO model
 model = YOLO('E:/Machine Learning/Object Detection/App 2.0/Models/v3.pt')
 
-
 def main():
     st.title("Image Filter, Copy, and Download")
-    rider_number = st.text_input("Enter a rider number, 0-999")
+    rider_number = st.text_input("Enter a rider number, 0-999") 
     if rider_number:
         try:
             class_name = int(rider_number)
         except: ValueError:st.write("Please enter number. ")
         
-    # Input widget to allow user to enter a source folder path
     folder_path = st.text_input("Enter the path to the source folder:")
-
-    # Create a destination folder for filtered images
     destination_folder = 'filtered_images'
     os.makedirs(destination_folder, exist_ok=True)
 
@@ -30,14 +26,10 @@ def main():
         if os.path.exists(folder_path):
             for image_name in os.listdir(folder_path):
                 image_path = os.path.join(folder_path, image_name)
-
-                # Run YOLO model on the image
                 results = model(image_path, conf=0.2)
                 boxes = results[0].boxes
-
-                # Check if class 69 is detected (adjust if needed)
                 for box in boxes:
-                    if box.cls == class_name:  # Adjust class number as per your YOLO model
+                    if box.cls == class_name:  
                         filtered_images.append(image_path)
                         source_file = os.path.join(folder_path, image_name)
                         dest_file = os.path.join(destination_folder, image_name)
@@ -48,22 +40,17 @@ def main():
             for image in filtered_images:
                 st.image(image, caption=image, use_column_width=True)
 
-            # Copy filtered images to destination folder
+            
             for image_path in filtered_images:
                 shutil.copy2(image_path, destination_folder)
-
-            # Create a zip file of filtered images
             zip_filename = 'filtered_images.zip'
             with zipfile.ZipFile(zip_filename, 'w') as zipf:
                 for root, dirs, files in os.walk(destination_folder):
                     for file in files:
                         zipf.write(os.path.join(root, file), file)
-
-            # Create and display download link for the zip file
             b64_zip_data = base64.b64encode(open(zip_filename, 'rb').read()).decode()
             download_link = f'<a href="data:application/zip;base64,{b64_zip_data}" download="{zip_filename}">Download Filtered Images</a>'
             st.markdown(download_link, unsafe_allow_html=True)
-
         else:
             st.write("Invalid source folder path. Please enter a valid path.")
         
