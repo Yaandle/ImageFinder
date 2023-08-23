@@ -34,9 +34,9 @@ if __name__ == "__main__":
     main()
     
 def main():
-    num_list = [ ]                     #Define the number list
+    num_list = [ ]     -                -                -              -         - #Define the number list
     st.subheader("Number Position Finder")
-    search_number = st.text_input("Enter the number you want to search for:")                # Get the number to search for
+    search_number = st.text_input("Enter the number you want to search for:")               
     if st.button("Find Position"):
         try:
             position = num_list.index(search_number) + 1
