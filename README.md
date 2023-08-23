@@ -1,8 +1,8 @@
 # ImageFinder
 Object Detection model that predicts the number inside the image.
 
-This uses a pre-trained dataset made in Roboflow with 100+ classes. 
+This uses a pre-trained dataset made in Roboflow with 100+ classes and 1800+ images. 
 
-Ultralytics YOLOV8.
+Trained using Ultralytics YOLOV8.
 
-App.py allows users to enter a 'folder path' and 'class number' sorts through an image directory and filters the images that contain the user-entered 'class_name' within the prediction to a downloaded zip folder.
+Streamlit app allows users to enter a 'class number' and 'folder path'. The app filters the images that contain the user-entered 'class_name' to a downloaded zip folder.
