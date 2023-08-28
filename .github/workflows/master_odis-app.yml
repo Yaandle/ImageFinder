@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'odis-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD415D0544E9480BA2B9012E61D89B56 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C09928F83B334A09A2921555C821F224 }}
