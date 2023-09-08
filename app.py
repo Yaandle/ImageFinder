@@ -44,5 +44,11 @@ def detect_and_filter():
         return jsonify(response_data)
     else:
         return jsonify({'error': "Invalid source folder path. Please enter a valid path."})
+
+@app.route('/health')
+def health_check():
+    return "OK", 200
+
+
 if __name__ == "__main__":
     app.run(debug=True)
