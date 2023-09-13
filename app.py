@@ -3,9 +3,10 @@ import os
 import shutil
 from ultralytics import YOLO
 import zipfile
+import base64
 
 app = Flask(__name__)
-model = YOLO('')
+model = YOLO('E:/Machine Learning/Object Detection/App 3.0/Models/model1800.pt')
 
 @app.route('/detect_and_filter', methods=['POST'])
 def detect_and_filter():
@@ -30,7 +31,7 @@ def detect_and_filter():
                 if box.cls == class_name:
                     filtered_images.append(image_path)
                     source_file = os.path.join(folder_path, image_name)
-                    dest_file = os.path.join(destination_dir, image_name)  # Use the correct destination path
+                    dest_file = os.path.join(destination_dir, image_name)
                     shutil.copy2(source_file, dest_file)
                     break
 
@@ -40,7 +41,11 @@ def detect_and_filter():
                 for file in files:
                     zipf.write(os.path.join(root, file), file)
 
-        response_data = {'filtered_images': filtered_images, 'zip_filename': zip_filename}
+        # Returning the zip file as base64-encoded data
+        with open(zip_filename, 'rb') as zip_file:
+            zip_data = base64.b64encode(zip_file.read()).decode()
+
+        response_data = {'filtered_images': filtered_images, 'zip_filename': zip_filename, 'zip_data': zip_data}
         return jsonify(response_data)
     else:
         return jsonify({'error': "Invalid source folder path. Please enter a valid path."})
@@ -48,7 +53,6 @@ def detect_and_filter():
 @app.route('/health')
 def health_check():
     return "OK", 200
-
 
 if __name__ == "__main__":
     app.run(debug=True)
