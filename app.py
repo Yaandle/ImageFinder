@@ -6,7 +6,7 @@ import zipfile
 import base64
 
 app = Flask(__name__)
-model = YOLO('E:/Machine Learning/Object Detection/App 3.0/Models/model1800.pt')
+model = YOLO('')
 
 @app.route('/detect_and_filter', methods=['POST'])
 def detect_and_filter():
@@ -41,7 +41,6 @@ def detect_and_filter():
                 for file in files:
                     zipf.write(os.path.join(root, file), file)
 
-        # Returning the zip file as base64-encoded data
         with open(zip_filename, 'rb') as zip_file:
             zip_data = base64.b64encode(zip_file.read()).decode()
 
