@@ -30,7 +30,7 @@ def detect_and_filter():
                 if box.cls == class_name:
                     filtered_images.append(image_path)
                     source_file = os.path.join(folder_path, image_name)
-                    dest_file = os.path.join(destination_dir, image_name)  # Use the correct destination path
+                    dest_file = os.path.join(destination_dir, image_name)  
                     shutil.copy2(source_file, dest_file)
                     break
 

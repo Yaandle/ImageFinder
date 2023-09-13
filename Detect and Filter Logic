@@ -1,0 +1,48 @@
+import requests
+import os
+import zipfile
+import base64
+
+def main():
+    destination_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'filtered_images')
+
+    num_list = [
+        '1', '11', '100', '104', '105', '106', '11', '112', '113', '115'
+    ]
+    
+    class_name = None  
+    rider_number = '11'
+    
+    if rider_number:
+        try:
+            class_name = int(rider_number)
+        except ValueError:
+            print("Please enter a valid number.")
+    
+    if class_name in num_list:
+        try:
+
+            position = num_list.index(str(class_name)) + 1
+            print(f"The number {class_name} is at position {position} in the list.")
+        except ValueError:
+            pass  
+    
+    folder_path = 'E:\Machine Learning\Object Detection\App 3.0\Dataset\images'  
+
+    data = {'class_name': class_name, 'folder_path': folder_path}
+    response = requests.post('http://127.0.0.1:5000/detect_and_filter', json=data)
+
+    if response.ok:
+        filtered_images = response.json()['filtered_images']
+        zip_filename = response.json()['zip_filename']
+        b64_zip_data = base64.b64encode(open(os.path.join(destination_dir, zip_filename), 'rb').read()).decode()
+        download_link = f'<a href="data:application/zip;base64,{b64_zip_data}" download="{zip_filename}">Download Filtered Images</a>'
+        print("Filtered images copied to 'filtered_images' folder:")
+        for image in filtered_images:
+            print(image)
+        print(download_link)
+    else:
+        print("Error processing images")
+
+if __name__ == "__main__":
+    main()
