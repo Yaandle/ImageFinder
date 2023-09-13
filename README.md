@@ -5,4 +5,4 @@ This uses a pre-trained dataset made in Roboflow with 100+ classes and 1800+ ima
 
 Trained using Ultralytics YOLOV8.
 
-Without Streamlit UI, for app with streamlit UI use STREAMLITUI branch.
+Without Streamlit UI, for the app with UI use streamlit-ui branch.
