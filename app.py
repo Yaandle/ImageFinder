@@ -5,7 +5,7 @@ from ultralytics import YOLO
 import zipfile
 
 app = Flask(__name__)
-model = YOLO('')
+model = YOLO('v2.pt')
 
 @app.route('/detect_and_filter', methods=['POST'])
 def detect_and_filter():
@@ -24,31 +24,28 @@ def detect_and_filter():
         for image_name in os.listdir(folder_path):
             image_path = os.path.join(folder_path, image_name)
 
-            results = model(image_path, conf=0.2)
+            results = model(image_path, conf=0.06)
             boxes = results[0].boxes
             for box in boxes:
                 if box.cls == class_name:
                     filtered_images.append(image_path)
                     source_file = os.path.join(folder_path, image_name)
-                    dest_file = os.path.join(destination_dir, image_name)  
+                    dest_file = os.path.join(destination_dir, image_name)
                     shutil.copy2(source_file, dest_file)
                     break
 
-        zip_filename = 'filtered_images.zip'
-        with zipfile.ZipFile(zip_filename, 'w') as zipf:
-            for root, dirs, files in os.walk(destination_dir):
-                for file in files:
-                    zipf.write(os.path.join(root, file), file)
+        if not filtered_images:
+            return jsonify({'message': "No images matching the criteria were found."}), 200
 
-        response_data = {'filtered_images': filtered_images, 'zip_filename': zip_filename}
+        success_message = "The images have been filtered and copied to 'filtered_images' folder."
+        response_data = {'filtered_images': filtered_images, 'message': success_message}
         return jsonify(response_data)
     else:
-        return jsonify({'error': "Invalid source folder path. Please enter a valid path."})
+        return jsonify({'error': "Invalid source folder path. Please enter a valid path."}), 400  
 
 @app.route('/health')
 def health_check():
     return "OK", 200
-
 
 if __name__ == "__main__":
     app.run(debug=True)
