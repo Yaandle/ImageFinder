@@ -5,4 +5,6 @@ This uses a pre-trained dataset made in Roboflow with 100+ classes and 1800+ ima
 
 Ultralytics YOLOV8 model.
 
-Without Streamlit UI, for the app with UI use streamlit-ui branch.
+for the app with UI use streamlit-ui branch.
+
+Bike number is extracted from Shopify webhook. 
