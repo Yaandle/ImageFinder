@@ -7,4 +7,4 @@ Ultralytics YOLOV8 model.
 
 for the app with UI use streamlit-ui branch.
 
-Bike number is extracted from Shopify webhook. 
+Bike number is extracted from Shopify webhook, images containing class are filtered.
