@@ -6,6 +6,7 @@ This uses a pre-trained dataset made in Roboflow with 100+ classes and 1800+ ima
 
 Ultralytics YOLOV8 model trained on 100 epochs in Google Collab.
 
-for the app with UI, use streamlit-ui branch.
+The bike number is extracted from the Shopify webhook, and images containing the class in a source bucket are filtered to another bucket.
 
-Bike number is extracted from Shopify webhook, images containing class are filtered.
+
+For the app with UI, use streamlit-ui branch.
