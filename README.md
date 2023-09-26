@@ -10,3 +10,5 @@ The bike number is extracted from the Shopify webhook, and images containing the
 
 
 For the app with UI, use streamlit-ui branch.
+
+Imagetransfer takes an input bucket and filteres images if they match the entered ~class name~, to a filtered-images bucket.
