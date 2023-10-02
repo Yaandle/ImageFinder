@@ -1,0 +1,30 @@
+import requests
+import json
+
+# Define your mock JSON data
+mock_data = {
+    "line_items": [
+        {
+            "properties": [
+                {
+                    "name": "Bike Number",
+                    "value": "14"
+                }
+            ]
+        }
+    ]
+}
+
+# Define the URL of your Flask app's endpoint
+flask_endpoint_url = "171.ngrok-free.app/webhook"  # Update with your actual URL
+
+# Send a POST request with the mock JSON data
+response = requests.post(flask_endpoint_url, json=mock_data)
+
+# Check the response from your Flask app
+if response.status_code == 200:
+    print("Mock JSON POST request successful.")
+    print("Response:", response.json())
+else:
+    print("Mock JSON POST request failed.")
+    print("Response:", response.text)
