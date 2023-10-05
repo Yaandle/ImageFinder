@@ -10,13 +10,10 @@ The bike number is extracted from the JSON Shopify webhook, images from a source
 
 ## Prerequisites
 
-Before running the application, ensure you have the following:
-
-- Python (>=3.6)
+- Python (3.10.10)
 - Ultralytics YOLO model (`model1800.pt`)
-- Google Cloud Storage credentials (JSON key file)
-- Flask and required Python libraries (see `requirements.txt`)
-- Ngrok (for webhook testing and public URL)
+- Google Cloud Storage credentials (JSON key file) 
+- Ngrok (for webhook URL)
 
   
 For the app with UI, use streamlit-ui branch.
