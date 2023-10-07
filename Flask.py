@@ -10,12 +10,11 @@ import requests
 app = Flask(__name__)
 model = YOLO('model1800.pt')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "googlekey.json"
-source_bucket_name = 'source-bucket'  
+source_bucket_name = 'odis-bucket'  
 destination_bucket_name = 'filtered-images-bucket'  
 storage_client = storage.Client()
 source_bucket = storage_client.bucket(source_bucket_name)
 destination_bucket = storage_client.bucket(destination_bucket_name)
-
 @app.route('/webhook', methods=['POST'])
 def webhook():
     webhook_data = request.get_json()
