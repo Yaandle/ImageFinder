@@ -1,0 +1,25 @@
+import requests
+import json
+
+mock_data = {
+    "line_items": [
+        {
+            "properties": [
+                {
+                    "name": "Bike Number",
+                    "value": "14"
+                }
+            ]
+        }
+    ]
+}
+
+flask_endpoint_url = 'https://odis-401208.ts.r.appspot.com/webhook'  
+response = requests.post(flask_endpoint_url, json=mock_data)
+
+if response.status_code == 200:
+    print("Mock JSON POST request successful.")
+    print("Response:", response.json())
+else:
+    print("Mock JSON POST request failed.")
+    print("Response:", response.text)
