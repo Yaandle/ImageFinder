@@ -6,17 +6,14 @@ from ultralytics import YOLO
 from google.cloud import storage
 import shutil
 import requests
-from flask_cors import CORS
 
 app = Flask(__name__)
-
-CORS(app, resources={r"/webhook": {"origins": "http://localhost:3000"}})
 
 #Setup
 model = YOLO('MODEL3200.pt')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "googlekey.json"
-source_bucket_name = 'odis-bucket'  
-destination_bucket_name = 'filtered-images-bucket'  
+source_bucket_name = ''  
+destination_bucket_name = ''  
 storage_client = storage.Client()
 source_bucket = storage_client.bucket(source_bucket_name)
 destination_bucket = storage_client.bucket(destination_bucket_name)
@@ -38,7 +35,7 @@ def webhook():
                         break 
     if bike_number:
         data = {'Bike Number': bike_number}  
-        gcp_url = 'https://odis-401208.ts.r.appspot.com'
+        gcp_url = ''
         with requests.post(gcp_url + '/filter_images', json=data, timeout=5) as response:
             if response.status_code == 200:
                 print(f"Bike number '{bike_number}' sent to Flask backend successfully on GCP.")
