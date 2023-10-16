@@ -12,10 +12,6 @@ app = Flask(__name__)
 
 #Setup
 model = YOLO('E:\Machine Learning\Object Detection\App IV\models\MODEL3200.pt')
-credentials = service_account.Credentials.from_service_account_file(
-    'E:/Machine Learning/Object Detection/App IV/backend/googlekey.json',
-    scopes=['https://www.googleapis.com/auth/cloud-platform']
-)
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "googlekey.json"
 source_bucket_name = 'odis-bucket'  
 destination_bucket_name = 'filtered-images-bucket'  
