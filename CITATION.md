@@ -7,3 +7,8 @@
   orcid = {0000-0001-5950-6979, 0000-0002-7603-6750, 0000-0003-3783-7069},
   license = {AGPL-3.0}
 }
+
+{
+Dwyer, B., Nelson, J. (2022), Solawetz, J., et. al. Roboflow (Version 1.0) [Software]. 
+Available from https://roboflow.com. computer vision.
+}
