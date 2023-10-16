@@ -21,7 +21,7 @@ function App() {
     };
 
     // Send the JSON payload to your Flask backend
-    fetch('https://odis-401208.ts.r.appspot.com/webhook', {
+    fetch('/webhook', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
