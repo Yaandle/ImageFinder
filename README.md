@@ -8,11 +8,6 @@ Ultralytics YOLOV8 model trained on 100 epochs in Google Collab.
 
 The bike number is extracted from the JSON Shopify webhook, images from a source bucket containing the bike number in the predictions are filtered to another bucket.
 
-## Prerequisites
 
-- Python (3.10.10)
-- Ultralytics YOLO model (`model1800.pt`)
-- Google Cloud Storage credentials (JSON key file) 
-- Ngrok (for webhook URL)
-
-The  streamlit-ui branch allows you to define an input folder and a number, and will perform object detection on the images in the folder.
+Master branch uses a React frontend that handles a JSON request from Shopify that is triggered by order creation.
+The streamlit-ui branch allows you to define an input folder and a number, and will perform object detection on the images in the folder.
