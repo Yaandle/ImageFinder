@@ -7,14 +7,14 @@ mock_data = {
             "properties": [
                 {
                     "name": "Bike Number",
-                    "value": "14"
+                    "value": "2"
                 }
             ]
         }
     ]
 }
 
-flask_endpoint_url = 'https://odis-401208.ts.r.appspot.com/webhook'  
+flask_endpoint_url = 'ngrokurl/webhook'  
 response = requests.post(flask_endpoint_url, json=mock_data)
 
 if response.status_code == 200:
