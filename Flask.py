@@ -9,9 +9,8 @@ import requests
 
 app = Flask(__name__)
 
-#Setup
-model = YOLO('MODEL3200.pt')
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "googlekey.json"
+model = YOLO('E:\odis\models\MODEL3200.pt')
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "key.json"
 source_bucket_name = ''  
 destination_bucket_name = ''  
 storage_client = storage.Client()
@@ -35,8 +34,8 @@ def webhook():
                         break 
     if bike_number:
         data = {'Bike Number': bike_number}  
-        gcp_url = ''
-        with requests.post(gcp_url + '/filter_images', json=data, timeout=5) as response:
+        gcp_url = ''   
+        with requests.post(gcp_url + '/filter_images', json=data, timeout=200) as response:
             if response.status_code == 200:
                 print(f"Bike number '{bike_number}' sent to Flask backend successfully on GCP.")
             else:
