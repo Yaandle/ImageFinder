@@ -9,7 +9,7 @@ import requests
 
 app = Flask(__name__)
 
-model = YOLO('E:\odis\models\MODEL3200.pt')
+model = YOLO('MODEL3200.pt')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "key.json"
 source_bucket_name = ''  
 destination_bucket_name = ''  
