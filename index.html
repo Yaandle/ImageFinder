@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Filter</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="full-screen flex-center">
+  <h1 class="text-xl">Image Filter</h1>
+  <h4 class="subheader">Specify Source and Destination Buckets</h4>
+  
+  <label for="sourceBucket">Source Bucket:</label>
+  <input type="text" id="sourceBucket" placeholder="Enter the source bucket name" required>
+  
+  <label for="destinationBucket">Destination Bucket:</label>
+  <input type="text" id="destinationBucket" placeholder="Enter the destination bucket name" required>
+  
+  <button id="filterButton">Filter Images</button>
+  
+  <script>
+    document.getElementById("filterButton").addEventListener("click", function() {
+      filterImages();
+    });
+  
+    function filterImages() {
+      const sourceBucket = document.getElementById("sourceBucket").value;
+      const destinationBucket = document.getElementById("destinationBucket").value;
+      const data = { source_bucket: sourceBucket, destination_bucket: destinationBucket };
+  
+      fetch('/filter_images', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.status === 200) {
+          console.log("Images filtered and copied to the destination bucket.");
+          // You can display a success message or handle the response as needed
+        } else {
+          console.log("Error filtering images.");
+          console.log("Response:", response.text());
+          // You can display an error message or handle the response as needed
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // You can display an error message or handle the error as needed
+      });
+    }
+  </script>
+</body>
+</html>
