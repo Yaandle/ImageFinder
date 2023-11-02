@@ -46,7 +46,7 @@ def webhook():
 
 
 
-@app.route('/filter_images', methods=['POST'])
+@app.route('/filter_images', methods=['POST','GET'])
 def filter_images():
     if "Bike Number" not in request.json:
         return jsonify({"error": "Bike Number key not found in JSON data."}), 400
