@@ -6,13 +6,13 @@ from ultralytics import YOLO
 from google.cloud import storage
 import shutil
 import requests
-from google.oauth2 import service_account
+
 app = Flask(__name__)
 
-model = YOLO('E:\Machine Learning\Object Detection\App IV\models\MODEL3200.pt')
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "googlekey.json"                                        #Update L 15/16/17
-source_bucket_name = 'odisbucket'  
-destination_bucket_name = 'output-bucket'  
+model = YOLO('server/src/models/model4k.pt')
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "server\src\GoogleKey\googlekey.json"                                        #Update L 15/16/17
+source_bucket_name = 'odissourcebucket'  
+destination_bucket_name = 'odisoutputbucket'  
 storage_client = storage.Client()
 source_bucket = storage_client.bucket(source_bucket_name)
 destination_bucket = storage_client.bucket(destination_bucket_name)
@@ -23,7 +23,7 @@ def webhook():
     Bike_Number = request.json.get('Bike_Number')
     if Bike_Number:
         data = {'Bike Number': Bike_Number}
-        gcp_url = ''                                                           #Update URL                             
+        gcp_url = 'https://odis-5mc5naqqxa-uc.a.run.app'                                                           #Update URL                             
         with requests.post(gcp_url + '/filterimages', json=data) as response: 
             if response.status_code == 200:
                 print(f"Bike number '{Bike_Number}' sent to /filter_images successfully on GCP.")
