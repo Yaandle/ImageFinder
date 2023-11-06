@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Filter</title>
-  <link rel="stylesheet" href="/style.css">
+    <title>OD Function</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="full-screen flex-center">
-  <h1 class="text-xl">Image Filter</h1>
-  <h4 class="subheader">Specify Source and Destination Buckets</h4>
-  
-  <label for="sourceBucket">Source Bucket:</label>
-  <input type="text" id="sourceBucket" placeholder="Enter the source bucket name" required>
-  
-  <label for="destinationBucket">Destination Bucket:</label>
-  <input type="text" id="destinationBucket" placeholder="Enter the destination bucket name" required>
-  
-  <button id="filterButton">Filter Images</button>
-  
-  <script>
-    document.getElementById("filterButton").addEventListener("click", function() {
-      filterImages();
-    });
-  
-    function filterImages() {
-      const sourceBucket = document.getElementById("sourceBucket").value;
-      const destinationBucket = document.getElementById("destinationBucket").value;
-      const data = { source_bucket: sourceBucket, destination_bucket: destinationBucket };
-  
-      fetch('/filter_images', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.status === 200) {
-          console.log("Images filtered and copied to the destination bucket.");
-          // You can display a success message or handle the response as needed
-        } else {
-          console.log("Error filtering images.");
-          console.log("Response:", response.text());
-          // You can display an error message or handle the response as needed
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // You can display an error message or handle the error as needed
-      });
-    }
-  </script>
+<body>
+    <h1>Find Number Position</h1>
+    <p>Server time: <span class="number">{{ server_time }}</span></p>
+    <form id="numberForm">
+        <label for="number">Enter a bike number:</label>
+        <input type="text" name="number" id="number"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p id="result"></p>
+    <p>Doing there <span class="bway">Bway</span> <span class="number">3/11/2023</span> <span class="number">1:10</span>am</p>
+    
+    <!-- Transfer Images Button -->
+    <button type="button" id="transferImages">Transfer Images</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('numberForm').addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                var formData = new FormData();
+                formData.append('number', document.getElementById('number').value);
+
+                fetch('/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = 'Class Name: <span class="number">' + data.position + '</span>';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Add event listener for the Transfer Images button
+            document.getElementById('transferImages').addEventListener('click', function() {
+                fetch('/transfer_images', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Images transferred successfully!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
