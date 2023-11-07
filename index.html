@@ -5,65 +5,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Find Number Position</h1>
-    <p>Server time: {{ server_time }}</p>
-    <form id="numberForm">
-        Enter a bike number: <input type="text" name="number" id="number"><br>
-        <input type="submit" value="Submit">
-    </form>
-    <p id="result"></p>
+    <main class="centered-container">
+        <h1>Find Number Position</h1>
+        <p>Server time: {{ server_time }}</p>
+        <form id="numberForm" class="centered-content">
+            Enter a bike number: <input type="text" name="number" id="number"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <p id="result"></p>
 
-    <h2>Upload Images or ZIP for Object Detection</h2>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
-        <input type="submit" value="Upload and Detect">
-    </form>
-    <p id="odResult"></p>
-    <a id="downloadLink" style="display:none;">Download Results</a>
+        <section id="about" class="centered-content">
+            <h2>About the Service</h2>
+            <p>
+                Our Object Detection Service is powered by advanced machine learning algorithms
+                to provide accurate detection and classification of objects within images.
+                Simply upload your images, and let our service do the rest.
+            </p>
+        </section>
 
-    <p>Doing there Bway 3/11/2023 1:10am</p>
+        <h2>Upload Images or ZIP for Object Detection</h2>
+        <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
+            <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
+            <input type="submit" value="Upload and Detect">
+        </form>
+        <p id="odResult"></p>
+        <a id="downloadLink" style="display:none;">Download Results</a>
+    </main>
 
-    <script>
-        document.getElementById('numberForm').onsubmit = function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch('/submit', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result').textContent = 'Class Name: ' + data.position;
-            })
-            .catch(error => {
-                document.getElementById('result').textContent = 'Error: ' + error;
-            });
-        };
+    <footer class="centered-content">
+        <p>© 2023 Object Detection Image Sorting. All rights reserved.</p>
+    </footer>
 
-        document.getElementById('uploadForm').onsubmit = function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch('/object_detection', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.zip_file_base64) {
-                    var downloadLink = document.getElementById('downloadLink');
-                    downloadLink.href = 'data:application/zip;base64,' + data.zip_file_base64;
-                    downloadLink.download = 'results.zip';
-                    downloadLink.style.display = 'block';
-                    downloadLink.textContent = 'Download Results';
-                    document.getElementById('odResult').textContent = '';
-                } else {
-                    document.getElementById('odResult').textContent = data.message;
-                }
-            })
-            .catch(error => {
-                document.getElementById('odResult').textContent = 'Error: ' + error;
-            });
-        };
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
