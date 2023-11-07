@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
 import time
 import os
-from ultralytics import YOLO  
+from ultralytics import YOLO 
 import zipfile
 import tempfile
 import shutil
