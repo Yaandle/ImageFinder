@@ -1,58 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>OD Function</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Find Number Position</h1>
-    <p>Server time: <span class="number">{{ server_time }}</span></p>
+    <p>Server time: {{ server_time }}</p>
     <form id="numberForm">
-        <label for="number">Enter a bike number:</label>
-        <input type="text" name="number" id="number"><br>
+        Enter a bike number: <input type="text" name="number" id="number"><br>
         <input type="submit" value="Submit">
     </form>
     <p id="result"></p>
-    <p>Doing there <span class="bway">Bway</span> <span class="number">3/11/2023</span> <span class="number">1:10</span>am</p>
-    
-    <!-- Transfer Images Button -->
-    <button type="button" id="transferImages">Transfer Images</button>
+
+    <h2>Upload Images or ZIP for Object Detection</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
+        <input type="submit" value="Upload and Detect">
+    </form>
+    <p id="odResult"></p>
+    <a id="downloadLink" style="display:none;">Download Results</a>
+
+    <p>Doing there Bway 3/11/2023 1:10am</p>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('numberForm').addEventListener('submit', function(event) {
-                event.preventDefault(); 
-
-                var formData = new FormData();
-                formData.append('number', document.getElementById('number').value);
-
-                fetch('/submit', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerHTML = 'Class Name: <span class="number">' + data.position + '</span>';
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+        document.getElementById('numberForm').onsubmit = function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = 'Class Name: ' + data.position;
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = 'Error: ' + error;
             });
+        };
 
-            // Add event listener for the Transfer Images button
-            document.getElementById('transferImages').addEventListener('click', function() {
-                fetch('/transfer_images', {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Images transferred successfully!');
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+        document.getElementById('uploadForm').onsubmit = function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/object_detection', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.zip_file_base64) {
+                    var downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = 'data:application/zip;base64,' + data.zip_file_base64;
+                    downloadLink.download = 'results.zip';
+                    downloadLink.style.display = 'block';
+                    downloadLink.textContent = 'Download Results';
+                    document.getElementById('odResult').textContent = '';
+                } else {
+                    document.getElementById('odResult').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                document.getElementById('odResult').textContent = 'Error: ' + error;
             });
-        });
+        };
     </script>
 </body>
 </html>
