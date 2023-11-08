@@ -14,6 +14,18 @@
         </form>
         <p id="result"></p>
 
+        <h2>Upload Images or ZIP for Object Detection</h2>
+        <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
+            <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
+            <input type="submit" value="Upload and Detect">
+        </form>
+        <p id="odResult"></p>
+        <a id="downloadLink" style="display:none;">Download Results</a>
+        <h2>Filter Images from Google Storage</h2>
+        <form id="predictFilterForm" class="centered-content">
+            <input type="submit" value="Predict and Filter">
+        </form>
+        
         <section id="about" class="centered-content">
             <h2>About the Service</h2>
             <p>
@@ -22,15 +34,6 @@
                 Simply upload your images, and let our service do the rest.
             </p>
         </section>
-
-        <h2>Upload Images or ZIP for Object Detection</h2>
-        <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
-            <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
-            <input type="submit" value="Upload and Detect">
-        </form>
-        <p id="odResult"></p>
-        <a id="downloadLink" style="display:none;">Download Results</a>
-
     </main>
 
     <footer class="centered-content">
