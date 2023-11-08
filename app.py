@@ -86,6 +86,10 @@ def predict_and_filter_folder():
     class_name = request.form.get('class_name')
     if not class_name:
         return jsonify({'error': 'Class name is not provided.'}), 400
+    try:
+        class_name_int = int(class_name)
+    except ValueError:
+        return jsonify({'error': 'Class name must be a valid integer.'}), 400
     model = YOLO('/app/model4k.pt')
     source_bucket_name = os.environ.get('SOURCE_BUCKET_NAME')
     destination_bucket_name = os.environ.get('DESTINATION_BUCKET_NAME')
@@ -100,7 +104,8 @@ def predict_and_filter_folder():
             results = model(image, conf=0.01)
             boxes = results[0].boxes
             for box in boxes:
-                if box.cls == class_name:
+                # Use class_name_int for comparison
+                if box.cls == class_name_int:
                     filtered_images.append(blob.name)
                     source_blob = source_bucket.blob(blob.name)
                     destination_blob = destination_bucket.blob(blob.name)
