@@ -6,12 +6,15 @@ import zipfile
 import tempfile
 import shutil
 import base64
+from google.cloud import storage
+from PIL import Image
+from io import BytesIO
+
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 Megabytes
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'zip'}
 
 def allowed_file(filename):
@@ -75,3 +78,37 @@ def object_detection():
                 b64_zip_data = base64.b64encode(zip_file.read()).decode()
             return jsonify({'message': 'Object detection completed', 'zip_file_base64': b64_zip_data}), 200
     return jsonify({'error': 'Invalid file type'}), 400
+
+storage_client = storage.Client()
+
+@app.route('/predict_filter', methods=['POST'])
+def predict_and_filter_folder():
+    class_name = request.form.get('class_name')
+    if not class_name:
+        return jsonify({'error': 'Class name is not provided.'}), 400
+    model = YOLO('/app/model4k.pt')
+    source_bucket_name = os.environ.get('SOURCE_BUCKET_NAME')
+    destination_bucket_name = os.environ.get('DESTINATION_BUCKET_NAME')
+    source_bucket = storage_client.bucket(source_bucket_name)
+    destination_bucket = storage_client.bucket(destination_bucket_name)
+    blobs = source_bucket.list_blobs()
+    filtered_images = []
+    for blob in blobs:
+        if blob.name.lower().endswith(('.jpg', '.jpeg')):
+            image_data = blob.download_as_bytes()
+            image = Image.open(BytesIO(image_data))
+            results = model(image, conf=0.01)
+            boxes = results[0].boxes
+            for box in boxes:
+                if box.cls == class_name:
+                    filtered_images.append(blob.name)
+                    source_blob = source_bucket.blob(blob.name)
+                    destination_blob = destination_bucket.blob(blob.name)
+                    temp_image_path = f'/tmp/{blob.name}'
+                    source_blob.download_to_filename(temp_image_path)
+                    destination_blob.upload_from_filename(temp_image_path)
+                    os.remove(temp_image_path)
+                    break
+    if not filtered_images:
+        return jsonify({'message': 'No images matching the class name were found.'}), 404
+    return jsonify({'filtered_images': filtered_images}), 200
