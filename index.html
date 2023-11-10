@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OD Function</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="centered-container">
+        <h1>Find Number Position</h1>
+        <p>Server time: {{ server_time }}</p>
+        <form id="numberForm" class="centered-content">
+            Enter a bike number: <input type="text" name="number" id="number"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <p id="result"></p>
+
+        <h2>Upload Images or ZIP for Object Detection</h2>
+        <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
+            <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
+            <input type="submit" value="Upload and Detect">
+        </form>
+        <p id="odResult"></p>
+        <a id="downloadLink" style="display:none;">Download Results</a>
+        <h2>Filter Images from Google Storage</h2>
+        <form id="predictFilterForm" class="centered-content">
+            <input type="submit" value="Predict and Filter">
+        </form>
+        
+        <section id="about" class="centered-content">
+            <h2>About the Service</h2>
+            <p>
+                Our Object Detection Service is powered by advanced machine learning algorithms
+                to provide accurate detection and classification of objects within images.
+                Simply upload your images, and let our service do the rest.
+            </p>
+        </section>
+    </main>
+    <header>
+        <img src="/static/images/labels.png" alt="Bred" width="400" height="400">   
+        <img src="/static/images/header.png" alt="Bway" width="400" height="400">  
+    </header>
+    
+    <footer class="centered-content">
+        <p>© 2023 Object Detection Image Sorting. All rights reserved.</p>
+    </footer>
+    
+    <script src="app.js"></script>
+</body>
+</html>
