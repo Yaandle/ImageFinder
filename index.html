@@ -14,14 +14,14 @@
         </form>
         <p id="result"></p>
 
-        <h2>Upload Images or ZIP for Object Detection</h2>
+        <h2>Upload Images for Object Detection</h2>
         <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
             <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
             <input type="submit" value="Upload and Detect">
         </form>
         <p id="odResult"></p>
         <a id="downloadLink" style="display:none;">Download Results</a>
-        <h2>Filter Images from Google Storage</h2>
+        <h2>Filter Images from Google Storage Bucket</h2>
         <form id="predictFilterForm" class="centered-content">
             <input type="submit" value="Predict and Filter">
         </form>
@@ -41,7 +41,7 @@
     </header>
     
     <footer class="centered-content">
-        <p>© 2023 Object Detection Image Sorting. All rights reserved.</p>
+        <p>© 2023 Object Detection Image Sorting.</p>
     </footer>
     
     <script src="app.js"></script>
