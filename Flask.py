@@ -90,8 +90,7 @@ def predict_and_filter_folder():
         class_name_int = int(class_name)
     except ValueError:
         return jsonify({'error': 'Class name must be a valid integer.'}), 400
-    #Load Model    
-    model = YOLO('/app/model4k.pt')                                              
+    model = YOLO('/app/model4k.pt')                  
     source_bucket_name = os.environ.get('SOURCE_BUCKET_NAME')
     destination_bucket_name = os.environ.get('DESTINATION_BUCKET_NAME')
     source_bucket = storage_client.bucket(source_bucket_name)
@@ -102,7 +101,7 @@ def predict_and_filter_folder():
         if blob.name.lower().endswith(('.jpg', '.jpeg')):
             image_data = blob.download_as_bytes()
             image = Image.open(BytesIO(image_data))
-            results = model(image, conf=0.01)
+            results = model(image, conf=0.01, device='cuda:0')
             boxes = results[0].boxes
             for box in boxes:
                 if box.cls == class_name_int:
@@ -117,3 +116,12 @@ def predict_and_filter_folder():
     if not filtered_images:
         return jsonify({'message': 'No images matching the class name were found.'}), 404
     return jsonify({'filtered_images': filtered_images}), 200
+
+@app.route('/download')
+def download_page():
+    return render_template('download_page.html')
+@app.route('/download_model')
+def download_model():
+    model_path = "/app"  
+    model_filename = "model4k.pt"  
+    return send_from_directory(model_path, model_filename, as_attachment=True)
