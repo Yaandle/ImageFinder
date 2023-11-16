@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Download Model</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="centered-container">
+        <!-- Download Model Section -->
+        <div class="download-model-box">
+            <h1>Download Ultralytics Yolov8 Model</h1>
+            <a id="downloadLink" href="/download_model">Download Model</a>
+            <p>
+                Our Yolov8 Model is trained on over 5k images and includes 200+ images.
+                Annotated on Roboflow and trained on Google's TPUs. 
+            </p>
+        </div>
+
+        <!-- Filter Images Section -->
+        <div class="filter-images-box">
+            <div class="image-container">
+                <img src="/static/images/googlecloudstorage.png" alt="GCS" width="400" height="400">
+                <h2>Subtitle Text</h2>
+            </div>
+            
+            <h2>Filter Images from Google Storage Bucket</h2>
+            <form id="predictFilterForm" class="centered-content">
+                <input type="submit" value="Predict and Filter">
+            </form>
+        </div>
+    </main>
+    <script>
+        document.getElementById('downloadLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            console.log('Downloading model...');
+            window.location.href = "/download_model";
+        });
+    </script>
+</body>
+</html>
