@@ -6,27 +6,31 @@
 </head>
 <body>
     <main class="centered-container">
-        <!-- Download Model Section -->
         <div class="download-model-box">
-            <h1>Download Ultralytics Yolov8 Model</h1>
-            <a id="downloadLink" href="/download_model">Download Model</a>
+            <h1>Download Ultralytics Models</h1>
             <p>
-                Our Yolov8 Model is trained on over 5k images and includes 200+ images.
+                Our Model is trained on over 5k images and includes 200+ images.
                 Annotated on Roboflow and trained on Google's TPUs. 
             </p>
+            <a id="downloadLink" href="/download_model">YOLOv8 Model</a>
         </div>
-
-        <!-- Filter Images Section -->
         <div class="filter-images-box">
             <div class="image-container">
-                <img src="/static/images/googlecloudstorage.png" alt="GCS" width="400" height="400">
-                <h2>Subtitle Text</h2>
+                <img src="/static/images/googlecloudstorage.png" alt="GCS" width="512" height="206">
+                <h2>We use Google Storage buckets to upload and filter images.</h2>
             </div>
             
-            <h2>Filter Images from Google Storage Bucket</h2>
+            <h4>Filter Images from ODISSOURCEBUCKET to OUDISOUTPUTBUCKET</h4>
             <form id="predictFilterForm" class="centered-content">
                 <input type="submit" value="Predict and Filter">
             </form>
+        </div>
+
+        <div class="image-column">
+            <div class="image-container">
+                <img src="/static/images/results.png" alt="GCS" width="685" height="200">
+                <h3>Model accuracy measured on validation set</h3>
+            </div>
         </div>
     </main>
     <script>
