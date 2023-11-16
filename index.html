@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>OD Function</title>
     <link rel="stylesheet" href="style.css">
@@ -14,17 +14,17 @@
         </form>
         <p id="result"></p>
 
-        <h2>Upload Image for Object Detection</h2>
-        <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
-            <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
-            <input type="submit" value="Upload and Detect">
-        </form>
-        <p id="odResult"></p>
-        <a id="downloadLink" style="display:none;">Download Results</a>
-        <h2>Filter Images from Google Storage Bucket</h2>
-        <form id="predictFilterForm" class="centered-content">
-            <input type="submit" value="Predict and Filter">
-        </form>
+        <div class="function-container">
+            <div class="function">
+                <h2>Upload Image for Object Detection</h2>
+                <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
+                    <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
+                    <input type="submit" value="Upload and Detect">
+                </form>
+                <p id="odResult"></p>
+                <a id="downloadLink" style="display:none;">Download Results</a>
+            </div>
+        </div>
         
         <section id="about" class="centered-content">
             <h2>About the Service</h2>
@@ -34,6 +34,8 @@
                 Simply upload your images, and let our service do the rest.
             </p>
         </section>
+        <h2>Download the Yolov8 model used for inference.</h2>
+        <a href="/download_page">Go to Download Page</a>
     </main>
     <header>
         <img src="/static/images/labels.png" alt="Bred" width="400" height="400">   
