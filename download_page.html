@@ -9,35 +9,34 @@
         <div class="download-model-box">
             <h1>Download Ultralytics Models</h1>
             <p>
-                Our Model is trained on over 5k images and includes 200+ images.
-                Annotated on Roboflow and trained on Google's TPUs. 
+                Annotated on Roboflow and trained on Google's TPUs.
+                Model 3200 has less classes but performs better. 
+                The datasets contain images of bike riders, the model is trained to identify currently 216 classes.
             </p>
-            <a id="downloadLink" href="/download_model">YOLOv8 Model</a>
+            <a class="downloadLink" href="/download_model" data-model="4600">YOLOv8 4600 Model</a>
+            <a class="downloadLink" href="/download_model2" data-model="3200">YOLOv8 3200 Model</a>
+        
+            <h2>To view our datasets visit:</h2>
+            <ul>
+                <li><a href="https://hub.ultralytics.com/datasets/jVGgaNOUqKxKBYcRReYW" target="_blank">Ultralytics Dataset</a></li>
+                <li><a href="https://universe.roboflow.com/myactionimages/rider-number-finder-3.0" target="_blank">Roboflow Dataset</a></li>
+            </ul>
         </div>
-        <div class="filter-images-box">
-            <div class="image-container">
-                <img src="/static/images/googlecloudstorage.png" alt="GCS" width="512" height="206">
-                <h2>We use Google Storage buckets to upload and filter images.</h2>
-            </div>
-            
-            <h4>Filter Images from ODISSOURCEBUCKET to OUDISOUTPUTBUCKET</h4>
-            <form id="predictFilterForm" class="centered-content">
-                <input type="submit" value="Predict and Filter">
-            </form>
-        </div>
-
+        
         <div class="image-column">
             <div class="image-container">
                 <img src="/static/images/results.png" alt="GCS" width="685" height="200">
-                <h3>Model accuracy measured on validation set</h3>
+                <h4>Model accuracy measured on validation set for 4600 model</h4>
             </div>
         </div>
     </main>
     <script>
-        document.getElementById('downloadLink').addEventListener('click', function (event) {
-            event.preventDefault();
-            console.log('Downloading model...');
-            window.location.href = "/download_model";
+        document.querySelectorAll('.downloadLink').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                console.log('Downloading model ' + this.getAttribute('data-model') + '...');
+                window.location.href = this.getAttribute('href');
+            });
         });
     </script>
 </body>
