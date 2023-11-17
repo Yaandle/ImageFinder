@@ -6,8 +6,25 @@
 </head>
 <body>
     <main class="centered-container">
-        <h1>Find Number Position</h1>
+        <h1>Object Detect Image Sorting</h1>
         <p>Server time: {{ server_time }}</p>
+
+        <!-- Number Dropdown List -->
+        <label for="numberDropdown">Select a number:</label>
+        <select id="numberDropdown">
+            <!-- Numbers will be populated here from the numList array -->
+            <script>
+                var numList = [/* your numbers array here */];
+                var dropdown = document.getElementById('numberDropdown');
+                numList.forEach(function(number) {
+                    var option = document.createElement('option');
+                    option.value = number;
+                    option.text = number;
+                    dropdown.add(option);
+                });
+            </script>
+        </select>
+
         <form id="numberForm" class="centered-content">
             Enter a bike number: <input type="text" name="number" id="number"><br>
             <input type="submit" value="Submit">
@@ -19,7 +36,7 @@
                 <h2>Upload Image for Object Detection</h2>
                 <form id="uploadForm" enctype="multipart/form-data" class="centered-content">
                     <input type="file" name="file" id="imageZip" accept=".jpg, .jpeg, .png, .zip" required>
-                    <input type="submit" value="Upload and Detect">
+                    <input type="submit" value="Upload and Predict">
                 </form>
                 <p id="odResult"></p>
                 <a id="downloadLink" style="display:none;">Download Results</a>
@@ -31,12 +48,13 @@
             <p>
                 Our Object Detection Service is powered by advanced machine learning algorithms
                 to provide accurate detection and classification of objects within images.
-                Simply upload your images, and let our service do the rest.
+                Simply upload your images, and let our service do the rest. 
             </p>
         </section>
-        <h2>Download the Yolov8 model used for inference.</h2>
-        <a href="/download_page">Go to Download Page</a>
+        <h2>View our Models and Datasets</h2>
+        <a href="/download_page">Models/Datasets</a>
     </main>
+
     <header>
         <img src="/static/images/labels.png" alt="Bred" width="400" height="400">   
         <img src="/static/images/header.png" alt="Bway" width="400" height="400">  
