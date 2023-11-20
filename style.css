@@ -38,13 +38,13 @@ nav ul li a {
 }
 
 .centered-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 20px;
 }
 
 .centered-content, main {
@@ -61,8 +61,30 @@ section {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-input[type="file"], button, .button {
-  border: 1px solid #ccc;
+/* Define a container for the two functions */
+.function-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.function {
+  flex: 1;
+  background: #fff;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.function h2 {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Adjust styles for the file input and buttons */
+.function input[type="file"],
+.function button,
+.function .button {
   display: block;
   margin: 1rem auto;
   padding: 1rem;
@@ -70,16 +92,32 @@ input[type="file"], button, .button {
   cursor: pointer;
 }
 
-button, .button {
+/* Apply styles to buttons within the functions */
+.function button,
+.function .button {
   background: #5cb85c;
   color: #fff;
   border: none;
   font-size: 1rem;
 }
 
-button:hover, .button:hover {
+.function button:hover,
+.function .button:hover {
   opacity: 0.9;
 }
+
+/* Custom list styles */
+.custom-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-list li {
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+/* End of custom list styles */
 
 footer {
   background: #333;
@@ -101,4 +139,19 @@ footer p {
       display: block;
       margin-bottom: 10px;
   }
+}
+
+.filter-images-box {
+  border: 1px solid #ccc; /* Adjust the color and width as needed */
+  padding: 20px; /* Adds space inside the box */
+  margin: 20px 0; /* Adds space outside the box */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for depth */
+  background-color: #3498db; /* Deeper blue background color */
+  color: #fff; /* Text color (white in this example) */
+}
+
+
+.image-container {
+  text-align: center; /* Centers the image and text inside the container */
 }
