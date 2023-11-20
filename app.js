@@ -22,7 +22,7 @@ document.getElementById('numberForm').addEventListener('submit', function(event)
     });
 });
 
-// This ID should match the form ID for object detection in your HTML
+
 document.getElementById('uploadForm').addEventListener('submit', function(event) {
     event.preventDefault();
     var formData = new FormData(this);
@@ -68,3 +68,4 @@ document.getElementById('predictFilterForm').addEventListener('submit', function
         document.getElementById('odResult').textContent = 'Error: ' + error.message;
     });
 });
+
