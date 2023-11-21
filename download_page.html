@@ -10,11 +10,14 @@
             <h1>Download Ultralytics Models</h1>
             <p>
                 Annotated on Roboflow and trained on Google's TPUs.
-                Model 3200 has less classes but performs better. 
+                Model 3200 has fewer classes but performs better. 
                 The datasets contain images of bike riders, the model is trained to identify currently 216 classes.
             </p>
-            <a class="downloadLink" href="/download_model" data-model="4600">YOLOv8 4600 Model</a>
-            <a class="downloadLink" href="/download_model2" data-model="3200">YOLOv8 3200 Model</a>
+            <h2>To download our models:</h2>
+            <ul>
+                <li><a class="downloadLink" href="/download_model" data-model="4600">YOLOv8 4600 </a></li>
+                <li><a class="downloadLink" href="/download_model2" data-model="3200">YOLOv8 3200 </a></li>
+            </ul>
         
             <h2>To view our datasets visit:</h2>
             <ul>
@@ -23,12 +26,17 @@
             </ul>
         </div>
         
-        <div class="image-column">
-            <div class="image-container">
-                <img src="/static/images/results.png" alt="GCS" width="685" height="200">
+        <div style="display: flex; justify-content: space-between;">
+            <div class="image-container" style="margin-right: 10px;">
+                <img src="/static/images/results.png" alt="GCS" width="605" height="150">
                 <h4>Model accuracy measured on validation set for 4600 model</h4>
             </div>
+            <div class="image-container">
+                <img src="/static/images/resultss.png" alt="GCS" width="605" height="150">
+                <h4>Model accuracy measured on validation set for 3200 model</h4>
+            </div>
         </div>
+        
     </main>
     <script>
         document.querySelectorAll('.downloadLink').forEach(link => {
