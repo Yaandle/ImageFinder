@@ -1,7 +1,15 @@
-// Global variable to store the class name
-var storedClassName = '';
+// Function to add event listeners safely
+function addEventListenerSafely(selector, event, handler) {
+    const element = document.getElementById(selector);
+    if (element) {
+        element.addEventListener(event, handler);
+    } else {
+        console.error(`Element with ID '${selector}' not found.`);
+    }
+}
 
-document.getElementById('numberForm').addEventListener('submit', function(event) {
+// Handler for 'numberForm' submit event
+function handleNumberFormSubmit(event) {
     event.preventDefault();
     var formData = new FormData(this);
     fetch('/submit', {
@@ -20,10 +28,10 @@ document.getElementById('numberForm').addEventListener('submit', function(event)
     .catch(error => {
         document.getElementById('result').textContent = 'Error: ' + error.message;
     });
-});
+}
 
-
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
+// Handler for 'uploadForm' submit event
+function handleUploadFormSubmit(event) {
     event.preventDefault();
     var formData = new FormData(this);
     fetch('/object_detection', {
@@ -45,9 +53,10 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     .catch(error => {
         document.getElementById('odResult').textContent = 'Error: ' + error.message;
     });
-});
+}
 
-document.getElementById('predictFilterForm').addEventListener('submit', function(event) {
+// Handler for 'predictFilterForm' submit event
+function handlePredictFilterFormSubmit(event) {
     event.preventDefault();
     var formData = new FormData(); 
     formData.append('class_name', storedClassName); 
@@ -67,5 +76,11 @@ document.getElementById('predictFilterForm').addEventListener('submit', function
     .catch(error => {
         document.getElementById('odResult').textContent = 'Error: ' + error.message;
     });
-});
+}
 
+// Adding event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    addEventListenerSafely('numberForm', 'submit', handleNumberFormSubmit);
+    addEventListenerSafely('uploadForm', 'submit', handleUploadFormSubmit);
+    addEventListenerSafely('predictFilterForm', 'submit', handlePredictFilterFormSubmit);
+});
