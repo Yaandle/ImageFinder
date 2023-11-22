@@ -10,7 +10,8 @@ from io import BytesIO
 import firebase_admin
 from firebase_admin import credentials, auth, initialize_app
 import json
-
+from datetime import timedelta
+from flask import redirect
 
 app = Flask(__name__)
 
@@ -109,7 +110,7 @@ def predict_and_filter_folder():
         class_name_int = int(class_name)
     except ValueError:
         return jsonify({'error': 'Class name must be a valid integer.'}), 400
-    model = YOLO('/app/model4k.pt')
+    model = YOLO('/app/Model4600.pt')
     source_bucket_name = os.environ.get('SOURCE_BUCKET_NAME')
     destination_bucket_name = os.environ.get('DESTINATION_BUCKET_NAME')
     source_bucket = storage_client.bucket(source_bucket_name)
@@ -159,9 +160,18 @@ def download_page():
 
 @app.route('/download_model')
 def download_model():
-    model_path = "/app"  
-    model_filename = "Model4600.pt"  
-    return send_from_directory(model_path, model_filename, as_attachment=True, download_name="Model4600.pt")
+    storage_client = storage.Client()
+    bucket_name = os.environ.get('MODEL_BUCKET')  # Assuming the bucket name is stored in an environment variable
+    blob_name = 'Model4600.pt'
+
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+
+    # Generate a signed URL valid for a short duration
+    signed_url = blob.generate_signed_url(timedelta(minutes=10))
+
+    # Redirect user to the signed URL
+    return redirect(signed_url)
 
 @app.route('/download_model2')
 def download_model2():
