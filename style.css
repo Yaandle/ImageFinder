@@ -50,7 +50,7 @@ nav ul li a {
 .centered-content, main {
   width: 80%;
   margin: 2rem auto;
-  max-width: 600px; /* Adjust as needed */
+  max-width: 600px; 
 }
 
 section {
@@ -61,7 +61,6 @@ section {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Define a container for the two functions */
 .function-container {
   display: flex;
   justify-content: space-between;
@@ -81,7 +80,6 @@ section {
   color: #333;
 }
 
-/* Adjust styles for the file input and buttons */
 .function input[type="file"],
 .function button,
 .function .button {
@@ -92,7 +90,6 @@ section {
   cursor: pointer;
 }
 
-/* Apply styles to buttons within the functions */
 .function button,
 .function .button {
   background: #5cb85c;
@@ -106,7 +103,6 @@ section {
   opacity: 0.9;
 }
 
-/* Custom list styles */
 .custom-list {
   list-style-type: none;
   padding: 0;
@@ -114,10 +110,8 @@ section {
 }
 
 .custom-list li {
-  margin-bottom: 10px; /* Adjust as needed */
+  margin-bottom: 10px; 
 }
-
-/* End of custom list styles */
 
 footer {
   background: #333;
@@ -142,16 +136,16 @@ footer p {
 }
 
 .filter-images-box {
-  border: 1px solid #ccc; /* Adjust the color and width as needed */
-  padding: 20px; /* Adds space inside the box */
-  margin: 20px 0; /* Adds space outside the box */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for depth */
-  background-color: #3498db; /* Deeper blue background color */
-  color: #fff; /* Text color (white in this example) */
+  border: 1px solid #ccc; 
+  padding: 20px; 
+  margin: 20px 0; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  background-color: #3498db; 
+  color: #fff; 
 }
 
 
 .image-container {
-  text-align: center; /* Centers the image and text inside the container */
+  text-align: center; 
 }
