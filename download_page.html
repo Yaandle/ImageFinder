@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Download Model</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Download Models</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <main class="centered-container">
         <div class="download-model-box">
             <h1>Download Ultralytics Models</h1>
             <p>
-                Annotated on Roboflow and trained on Google's TPUs.
-                Model 3200 has fewer classes but performs better. 
-                The datasets contain images of bike riders, the model is trained to identify currently 216 classes.
+                Annotated on Roboflow and trained on Google's TPUs. 
+                The datasets contain images of bike riders that the model is trained on.
+                Model 4600 can identify currently 216 classes.
+                Model 3200 has fewer classes but performs better.
             </p>
             <h2>To download our models:</h2>
             <ul>
-                <li><a class="downloadLink" href="/download_model" data-model="4600">YOLOv8 4600 </a></li>
+                <li><a class="downloadLink" href="/download_model" data-model="4600">YOLOv8 4600</a></li>
                 <li><a class="downloadLink" href="/download_model2" data-model="3200">YOLOv8 3200 </a></li>
             </ul>
         
@@ -38,14 +39,5 @@
         </div>
         
     </main>
-    <script>
-        document.querySelectorAll('.downloadLink').forEach(link => {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                console.log('Downloading model ' + this.getAttribute('data-model') + '...');
-                window.location.href = this.getAttribute('href');
-            });
-        });
-    </script>
 </body>
 </html>
