@@ -12,9 +12,11 @@ from firebase_admin import credentials, auth, initialize_app
 import json
 from datetime import timedelta
 from flask import redirect
+from firebase_admin import auth as firebase_auth
+from werkzeug.exceptions import BadRequest
+import logging
 
 app = Flask(__name__)
-
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024 
@@ -36,15 +38,35 @@ def index():
 
 @app.route('/verify-token', methods=['POST'])
 def verify_token():
-    id_token = request.json.get('idToken')
     try:
-        decoded_token = auth.verify_id_token(id_token)
+        id_token = request.json.get('idToken')
+        if not id_token:
+            raise BadRequest('Missing ID token')
+        
+        decoded_token = firebase_auth.verify_id_token(id_token)
         uid = decoded_token['uid']
         session['user_id'] = uid
         return jsonify({'message': 'Successfully set session'}), 200
-    except:
+    except firebase_auth.InvalidIdTokenError:
         return jsonify({'message': 'Invalid token'}), 401
+    except BadRequest as e:
+        return jsonify({'message': str(e)}), 400
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return jsonify({'message': 'Internal server error'}), 500
 
+@app.route('/secure-page')
+def secure_page():
+    if 'user_id' in session:
+        try:
+            user = auth.get_user(session['user_id'])
+            return render_template('secure-page.html', user=user)
+        except Exception as e:
+            logging.error(f"Error fetching user: {e}")
+            # handle error (e.g., clear session, redirect to login)
+    else:
+        logging.info("No user in session, redirecting to login")
+        return redirect(url_for('login'))
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -61,25 +83,20 @@ def object_detection():
     model = YOLO('/app/model4k.pt')
     if 'files[]' not in request.files:
         return jsonify({'error': 'No file part'}), 400
-
     files = request.files.getlist('files[]')
     if not files:
         return jsonify({'error': 'No selected files'}), 400
-
     with tempfile.TemporaryDirectory() as temp_dir:
         for file in files:
             if file and allowed_file(file.filename):
                 file_path = os.path.join(temp_dir, file.filename)
                 file.save(file_path)
-
         output_dir = os.path.join(temp_dir, 'runs', 'detect', 'predict5')
         os.makedirs(output_dir, exist_ok=True)
-
         for file in os.listdir(temp_dir):
             if file.lower().endswith(('.png', '.jpg', '.jpeg')):
                 image_path = os.path.join(temp_dir, file)
                 model(image_path, save=True, save_txt=True, conf=0.1, project=output_dir, name='')
-
         zip_filename = 'results.zip'
         zip_path = os.path.join(temp_dir, zip_filename)
         with zipfile.ZipFile(zip_path, 'w') as zipf:
@@ -87,17 +104,12 @@ def object_detection():
                 for file in files:
                     file_path = os.path.join(root, file)
                     zipf.write(file_path, os.path.relpath(file_path, temp_dir))
-
         with open(zip_path, "rb") as zip_file:
             b64_zip_data = base64.b64encode(zip_file.read()).decode()
-
         return jsonify({'message': 'Object detection completed', 'zip_file_base64': b64_zip_data}), 200
-
     return jsonify({'error': 'Invalid file type'}), 400
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
-
 
 storage_client = storage.Client()
 
@@ -138,14 +150,6 @@ def predict_and_filter_folder():
     success_message = "The images have been filtered and saved to the destination bucket."
     return jsonify({'filtered_images': filtered_images,'message': success_message}), 200
 
-@app.route('/secure-page')
-def secure_page():
-    if 'user_id' in session:
-        user = auth.get_user(session['user_id'])
-        return render_template('secure.html', user=user)
-    else:
-        return redirect(url_for('login'))
-    
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
@@ -161,16 +165,11 @@ def download_page():
 @app.route('/download_model')
 def download_model():
     storage_client = storage.Client()
-    bucket_name = os.environ.get('MODEL_BUCKET')  # Assuming the bucket name is stored in an environment variable
+    bucket_name = os.environ.get('MODEL_BUCKET')  
     blob_name = 'Model4600.pt'
-
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
-
-    # Generate a signed URL valid for a short duration
     signed_url = blob.generate_signed_url(timedelta(minutes=10))
-
-    # Redirect user to the signed URL
     return redirect(signed_url)
 
 @app.route('/download_model2')
