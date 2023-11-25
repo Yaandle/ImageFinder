@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+    </header>
+    <main class="centered-container">
+        <h1>Welcome, <span id="userName"></span>!</h1>
+        <p>You are now on the secure page. Enjoy exclusive features and content.</p>
+        <div class="filter-images-box">
+            <div class="image-container">
+                <img src="/static/images/googlecloudstorage.png" alt="GCS" width="206" height="103">
+                <h2>We use Google Storage buckets to upload and filter images.</h2>
+            </div>
+            
+            <h4>Filter Images from ODISSOURCEBUCKET to OUDISOUTPUTBUCKET</h4>
+            <form id="predictFilterForm" class="centered-content">
+                <input type="submit" value="Predict and Filter">
+            </form>
+        </div>
+        <a href="/logout" class="button">Logout</a>
+    </main>
+    <footer>
+        <h4> bway bway 23/11/23 </h4>
+    </footer>
+
+    <script type="module">
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+        import app from '/static/firebase-config.js';
+    
+        const auth = getAuth(app);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+
+                var userName = document.getElementById('userName');
+                userName.textContent = user.displayName || user.email; 
+            } else {
+                window.location.href = '/login.html'; 
+            }
+        });
+
+        document.getElementById('predictFilterForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>
