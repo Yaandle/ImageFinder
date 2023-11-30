@@ -6,3 +6,13 @@ This uses a pre-trained dataset made in Roboflow with 100+ classes and 1800+ ima
 Trained using Ultralytics YOLOV8.
 
 Streamlit app allows users to enter a 'class number' and 'folder path'. The app filters the images that contain the user-entered 'class_name' to a downloaded zip folder.
+
+
+
+# Setup
+
+cd to env and activate odis\scripts\activate
+cd to odistesting\testing
+
+run /streamlit run predict.py
+run /python predict.py
